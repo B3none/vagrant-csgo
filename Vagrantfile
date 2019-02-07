@@ -1,4 +1,3 @@
-# All Vagrant configuration is done below.
 Vagrant.configure(2) do |config|
   # Setup the box to run Ubuntu 18.04
   config.vm.box = "bento/ubuntu-18.04"
@@ -17,6 +16,6 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "./csgo", "/home/vagrant/serverfiles/csgo"
 
   # Provision script
-  config.vm.provision "install", path: "install.sh", privileged: false
+  config.vm.provision "shell", path: "install.sh", privileged: false
 
 end
