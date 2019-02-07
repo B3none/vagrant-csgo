@@ -1,20 +1,22 @@
 #!/bin/bash
 
-eval $APTGET update
-eval $APTGET upgrade
+APTGET="apt-get"
+
+eval ${APTGET} update
+eval ${APTGET} upgrade
 
 echo -e "\n--- libc6-i386 & lib32gcc1 - i386 packages ---\n"
 sudo dpkg --add-architecture i386
-eval $APTGET update
-eval $APTGET install libc6-i386 lib32gcc1
+eval ${APTGET} update
+eval ${APTGET} install libc6-i386 lib32gcc1
 
 echo -e "\n--- ia32-libs - i386 packages ---\n"
 sudo dpkg --add-architecture i386
-eval $APTGET update
+eval ${APTGET} update
 sudo aptitude -y -q install ia32-libs
 
 echo -e "\n--- Binaries (gdb, tmux, git ...) ---\n"
-eval $APTGET install gdb tmux git curl
+eval ${APTGET} install gdb tmux git curl
 
 echo -e "\n--- IP Tables ---\n"
 echo "*filter
