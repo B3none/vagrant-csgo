@@ -1,22 +1,7 @@
 #!/bin/bash
 
-APTGET="apt-get"
-
-eval ${APTGET} update
-eval ${APTGET} upgrade
-
-echo -e "\n--- libc6-i386 & lib32gcc1 - i386 packages ---\n"
-sudo dpkg --add-architecture i386
-eval ${APTGET} update
-eval ${APTGET} install libc6-i386 lib32gcc1
-
-echo -e "\n--- ia32-libs - i386 packages ---\n"
-sudo dpkg --add-architecture i386
-eval ${APTGET} update
-sudo aptitude -y -q install ia32-libs
-
-echo -e "\n--- Binaries (gdb, tmux, git ...) ---\n"
-eval ${APTGET} install gdb tmux git curl
+apt-get update
+apt-get upgrade
 
 echo -e "\n--- IP Tables ---\n"
 echo "*filter
@@ -65,13 +50,20 @@ COMMIT
 
 *mangle
 COMMIT" > /home/vagrant/iptables.up.rules
-sudo cp /home/vagrant/iptables.up.rules /etc/iptables.up.rules
-sudo iptables-restore < /etc/iptables.up.rules
+cp /home/vagrant/iptables.up.rules /etc/iptables.up.rules
+iptables-restore < /etc/iptables.up.rules
+
+echo -e "\n--- LGSM pre-requisites ---\n"
+apt-get update
+apt-get install mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates binutils bc jq tmux lib32gcc1 libstdc++6 libstdc++6:i386
 
 echo -e "\n--- Install CS:GO server ---\n"
 cd /home/vagrant
-wget https://raw.github.com/dgibbs64/linuxgameservers/master/CounterStrikeGlobalOffensive/csgoserver
+wget -O linuxgsm.sh https://linuxgsm.sh
+chmod +x linuxgsm.sh
+bash linuxgsm.sh csgoserver
+
 sed -i 's/"0.0.0.0"/"192.168.56.101"/' /home/vagrant/csgoserver
-chmod +x csgoserver
-sudo chown vagrant:vagrant -R /home/vagrant/serverfiles
+
+chown vagrant:vagrant -R /home/vagrant/serverfiles
 /home/vagrant/csgoserver auto-install

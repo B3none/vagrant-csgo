@@ -16,6 +16,6 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "./csgo", "/home/vagrant/serverfiles/csgo"
 
   # Provision script
-  config.vm.provision "shell", path: "install.sh", privileged: false
+  config.vm.provision "shell", path: "install.sh"
 
 end
