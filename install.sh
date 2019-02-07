@@ -1,7 +1,7 @@
 #!/bin/bash
 
-apt-get update
-apt-get upgrade
+sudo apt-get update
+sudo apt-get upgrade
 
 echo -e "\n--- IP Tables ---\n"
 echo "*filter
@@ -50,20 +50,20 @@ COMMIT
 
 *mangle
 COMMIT" > /home/vagrant/iptables.up.rules
-cp /home/vagrant/iptables.up.rules /etc/iptables.up.rules
-iptables-restore < /etc/iptables.up.rules
+sudo cp /home/vagrant/iptables.up.rules /etc/iptables.up.rules
+sudo iptables-restore < /etc/iptables.up.rules
 
 echo -e "\n--- LGSM pre-requisites ---\n"
-apt-get update
-apt-get install mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates binutils bc jq tmux lib32gcc1 libstdc++6 libstdc++6:i386
+sudo apt-get update
+sudo apt-get install mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux ca-certificates binutils bc jq tmux lib32gcc1 libstdc++6 libstdc++6:i386
 
 echo -e "\n--- Install CS:GO server ---\n"
 cd /home/vagrant
 wget -O linuxgsm.sh https://linuxgsm.sh
 chmod +x linuxgsm.sh
-bash linuxgsm.sh csgoserver
+/home/vagrant/linuxgsm.sh csgoserver
 
 sed -i 's/"0.0.0.0"/"192.168.56.101"/' /home/vagrant/csgoserver
 
-chown vagrant:vagrant -R /home/vagrant/serverfiles
+sudo chown vagrant:vagrant -R /home/vagrant/serverfiles
 /home/vagrant/csgoserver auto-install
