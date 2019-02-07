@@ -1,4 +1,4 @@
-# vagrant-CSGO-server
+# vagrant-csgo
 Vagrant deployment for CS:GO.
 Use this tool to easily start a development server!
 
